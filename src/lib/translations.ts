@@ -15,7 +15,7 @@ export const translations = {
     welcome: 'Welcome to KeuanganKu',
     welcomeSubtitle: 'Your personal finance tracker to manage expenses with ease.',
     totalExpenses: 'Total Expenses',
-    expenseCount: (count: number) => `${count} expense(s)`,
+    expenseCount: (count: number) => `from ${count} transactions`,
     addExpense: 'Add Expense',
     addExpenseManually: 'Add Expense Manually',
     description: 'Description',
@@ -39,6 +39,8 @@ export const translations = {
     fieldRequired: 'This field is required',
     noResults: 'No results found.',
     addCategory: 'Add new category...',
+    expenseByCategory: 'Expenses by Category',
+    topCategoriesSubtitle: 'A look at your top spending categories.',
   },
   id: {
     appName: 'KeuanganKu',
@@ -56,7 +58,7 @@ export const translations = {
     welcome: 'Selamat Datang di KeuanganKu',
     welcomeSubtitle: 'Aplikasi pelacak keuangan pribadi untuk mengelola pengeluaran dengan mudah.',
     totalExpenses: 'Total Pengeluaran',
-    expenseCount: (count: number) => `${count} pengeluaran`,
+    expenseCount: (count: number) => `dari ${count} transaksi`,
     addExpense: 'Tambah Pengeluaran',
     addExpenseManually: 'Tambah Pengeluaran Manual',
     description: 'Deskripsi',
@@ -80,6 +82,8 @@ export const translations = {
     fieldRequired: 'Bagian ini wajib diisi',
     noResults: 'Kategori tidak ditemukan.',
     addCategory: 'Tambah kategori baru...',
+    expenseByCategory: 'Pengeluaran per Kategori',
+    topCategoriesSubtitle: 'Ringkasan kategori pengeluaran teratas Anda.',
   },
 };
 

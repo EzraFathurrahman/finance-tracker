@@ -7,13 +7,15 @@ import { SummaryCards } from './summary-cards';
 import { ExpenseList } from './expense-list';
 import { FileUploadCard } from './file-upload-card';
 import { ExpenseForm } from './expense-form';
-import { Separator } from './ui/separator';
-import { ConnectBankCard } from './connect-bank-card';
+import { ExpensePieChart } from './expense-pie-chart';
 
 const initialExpenses: Expense[] = [
   { id: '1', description: 'Groceries', amount: 75000 },
   { id: '2', description: 'Lunch with colleagues', amount: 125000 },
   { id: '3', description: 'Internet Bill', amount: 300000 },
+  { id: '4', description: 'Groceries', amount: 150000 },
+  { id: '5', description: 'Transport', amount: 50000 },
+  { id: '6', description: 'Entertainment', amount: 200000 },
 ];
 
 export function DashboardClient() {
@@ -36,19 +38,26 @@ export function DashboardClient() {
         <p className="text-muted-foreground">{t('welcomeSubtitle')}</p>
       </div>
 
-      <SummaryCards expenses={expenses} />
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
+        <div className="lg:col-span-3">
+          <SummaryCards expenses={expenses} />
+        </div>
+        <div className="lg:col-span-2">
+          <ExpensePieChart expenses={expenses} />
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         <div className="space-y-6 lg:col-span-3">
-          <ExpenseList expenses={expenses} />
+          <ExpenseForm onAddExpense={handleAddExpense} expenses={expenses} />
         </div>
         <div className="space-y-6 lg:col-span-2">
-          <ExpenseForm onAddExpense={handleAddExpense} expenses={expenses} />
-          <Separator />
           <FileUploadCard onUpload={handleUpload} />
-          <Separator />
-          <ConnectBankCard />
         </div>
+      </div>
+
+      <div className="space-y-6">
+        <ExpenseList expenses={expenses} />
       </div>
     </div>
   );
