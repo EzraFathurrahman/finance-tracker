@@ -18,7 +18,7 @@ function MainContent({ children }: { children: React.ReactNode }) {
   const { t } = useLanguage();
   return (
     <div>
-      <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b bg-gradient-to-b from-background to-accent/50 px-4 backdrop-blur-sm sm:px-6">
+      <header className="sticky top-0 z-10 flex h-16 items-center justify-between gap-4 border-b bg-gradient-to-b from-background to-accent/50 px-4 backdrop-blur-sm sm:px-6 dark:from-background dark:to-accent/50 light:from-blue-50 light:to-blue-100">
         <div className="flex items-center gap-2">
           <AppLogo />
         </div>
