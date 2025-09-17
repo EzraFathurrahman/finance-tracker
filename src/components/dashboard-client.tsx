@@ -5,7 +5,6 @@ import { useLanguage } from '@/contexts/language-provider';
 import type { Expense } from '@/types';
 import { SummaryCards } from './summary-cards';
 import { ExpenseList } from './expense-list';
-import { FileUploadCard } from './file-upload-card';
 import { ExpenseForm } from './expense-form';
 import { ExpensePieChart } from './expense-pie-chart';
 
@@ -39,25 +38,21 @@ export function DashboardClient() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-2">
           <SummaryCards expenses={expenses} />
         </div>
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-3">
           <ExpensePieChart expenses={expenses} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-        <div className="space-y-6 lg:col-span-3">
-          <ExpenseForm onAddExpense={handleAddExpense} expenses={expenses} />
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="space-y-6">
+          <ExpenseForm onAddExpense={handleAddExpense} expenses={expenses} onUpload={handleUpload} />
         </div>
-        <div className="space-y-6 lg:col-span-2">
-          <FileUploadCard onUpload={handleUpload} />
+        <div className="space-y-6">
+          <ExpenseList expenses={expenses} />
         </div>
-      </div>
-
-      <div className="space-y-6">
-        <ExpenseList expenses={expenses} />
       </div>
     </div>
   );

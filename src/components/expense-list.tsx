@@ -25,7 +25,7 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('expenseList')}</CardTitle>
+        <CardTitle>{t('expenseDetails')}</CardTitle>
         <CardDescription>{t('expenseCount', expenses.length)}</CardDescription>
       </CardHeader>
       <CardContent>

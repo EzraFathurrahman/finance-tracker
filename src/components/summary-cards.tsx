@@ -1,6 +1,6 @@
 'use client';
 
-import { CircleDollarSign, List } from 'lucide-react';
+import { CircleDollarSign, CalendarDays } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Expense } from '@/types';
 import { useLanguage } from '@/contexts/language-provider';
@@ -23,7 +23,7 @@ export function SummaryCards({ expenses }: SummaryCardsProps) {
   };
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{t('totalExpenses')}</CardTitle>
         <CircleDollarSign className="h-4 w-4 text-muted-foreground" />
@@ -31,6 +31,13 @@ export function SummaryCards({ expenses }: SummaryCardsProps) {
       <CardContent>
         <div className="text-3xl font-bold">{formatCurrency(totalExpenses)}</div>
         <p className="text-xs text-muted-foreground">{t('expenseCount', expenses.length)}</p>
+      </CardContent>
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4">
+        <CardTitle className="text-sm font-medium">{t('timeRange')}</CardTitle>
+        <CalendarDays className="h-4 w-4 text-muted-foreground" />
+      </CardHeader>
+      <CardContent>
+        <div className="text-lg font-semibold">{t('thisMonth')}</div>
       </CardContent>
     </Card>
   );

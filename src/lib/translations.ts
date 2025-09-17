@@ -27,7 +27,7 @@ export const translations = {
     submitExpense: 'Add Expense',
     uploadFile: 'Upload File',
     uploadInstructions:
-      'Upload a CSV, PDF, or image file to automatically add expenses. Drag and drop or click to select.',
+      'Drag & drop or click to upload CSV, PDF, or image.',
     processingFile: 'Processing file...',
     uploadSuccess: 'File processed successfully!',
     uploadError: 'Failed to process file. Please try again.',
@@ -41,6 +41,10 @@ export const translations = {
     addCategory: 'Add new category...',
     expenseByCategory: 'Expenses by Category',
     topCategoriesSubtitle: 'A look at your top spending categories.',
+    or: 'or',
+    expenseDetails: 'Expense Details',
+    timeRange: 'Time Range',
+    thisMonth: 'This Month',
   },
   id: {
     appName: 'KeuanganKu',
@@ -70,7 +74,7 @@ export const translations = {
     submitExpense: 'Tambah Pengeluaran',
     uploadFile: 'Unggah File',
     uploadInstructions:
-      'Unggah file CSV, PDF, atau gambar untuk menambahkan pengeluaran secara otomatis. Seret dan lepas atau klik untuk memilih.',
+      'Seret & lepas atau klik untuk mengunggah CSV, PDF, atau gambar.',
     processingFile: 'Memproses file...',
     uploadSuccess: 'File berhasil diproses!',
     uploadError: 'Gagal memproses file. Silakan coba lagi.',
@@ -84,6 +88,10 @@ export const translations = {
     addCategory: 'Tambah kategori baru...',
     expenseByCategory: 'Pengeluaran per Kategori',
     topCategoriesSubtitle: 'Ringkasan kategori pengeluaran teratas Anda.',
+    or: 'atau',
+    expenseDetails: 'Rincian Pengeluaran',
+    timeRange: 'Rentang Waktu',
+    thisMonth: 'Bulan Ini',
   },
 };
 

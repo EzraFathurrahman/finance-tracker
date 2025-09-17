@@ -23,13 +23,16 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
+import { Separator } from '@/components/ui/separator';
+import { FileUploadCard } from './file-upload-card';
 
 interface ExpenseFormProps {
   onAddExpense: (expense: Omit<Expense, 'id'>) => void;
   expenses: Expense[];
+  onUpload: (expenses: Omit<Expense, 'id'>[]) => void;
 }
 
-export function ExpenseForm({ onAddExpense, expenses }: ExpenseFormProps) {
+export function ExpenseForm({ onAddExpense, expenses, onUpload }: ExpenseFormProps) {
   const { t } = useLanguage();
   const { toast } = useToast();
   const [open, setOpen] = React.useState(false);
@@ -66,7 +69,7 @@ export function ExpenseForm({ onAddExpense, expenses }: ExpenseFormProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('addExpenseManually')}</CardTitle>
+        <CardTitle>{t('addExpense')}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -175,6 +178,12 @@ export function ExpenseForm({ onAddExpense, expenses }: ExpenseFormProps) {
             </Button>
           </form>
         </Form>
+        <div className="flex items-center gap-4 my-4">
+          <Separator className="flex-1" />
+          <span className="text-xs text-muted-foreground">{t('or')}</span>
+          <Separator className="flex-1" />
+        </div>
+        <FileUploadCard onUpload={onUpload} />
       </CardContent>
     </Card>
   );

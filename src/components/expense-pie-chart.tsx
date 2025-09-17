@@ -36,13 +36,7 @@ const COLORS = [
 export function ExpensePieChart({ expenses }: ExpensePieChartProps) {
   const { t, language } = useLanguage();
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat(language === 'id' ? 'id-ID' : 'en-US', {
-      style: 'currency',
-      currency: 'IDR',
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
+  const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
 
   const chartData = React.useMemo(() => {
     const categoryTotals = expenses.reduce((acc, expense) => {
@@ -51,19 +45,31 @@ export function ExpensePieChart({ expenses }: ExpensePieChartProps) {
     }, {} as Record<string, number>);
 
     return Object.entries(categoryTotals)
-      .map(([name, value]) => ({ name, value }))
+      .map(([name, value]) => ({
+        name,
+        value,
+        percentage: totalExpenses > 0 ? (value / totalExpenses) * 100 : 0,
+      }))
       .sort((a, b) => b.value - a.value);
-  }, [expenses]);
+  }, [expenses, totalExpenses]);
 
   const chartConfig = React.useMemo(() => {
     return chartData.reduce((acc, data, index) => {
       acc[data.name] = {
-        label: data.name,
+        label: `${data.name} (${data.percentage.toFixed(1)}%)`,
         color: COLORS[index % COLORS.length],
       };
       return acc;
     }, {} as any);
   }, [chartData]);
+  
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat(language === 'id' ? 'id-ID' : 'en-US', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    }).format(amount);
+  };
 
   return (
     <Card className="flex flex-col">
@@ -81,18 +87,18 @@ export function ExpensePieChart({ expenses }: ExpensePieChartProps) {
               content={
                 <ChartTooltipContent
                   nameKey="name"
-                  formatter={(value, name) => `${formatCurrency(value as number)}`}
+                  formatter={(value, name, props) => `${formatCurrency(value as number)} (${(props.payload.percentage as number).toFixed(1)}%)`}
                 />
               }
             />
-            <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60}>
+             <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60}>
               {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
             <ChartLegend
               content={<ChartLegendContent nameKey="name" />}
-              className="[&_.recharts-legend-item]:w-1/2 [&_.recharts-legend-item]:justify-center"
+              className="[&_.recharts-legend-item]:w-1/2 [&_.recharts-legend-item]:justify-start"
             />
           </PieChart>
         </ChartContainer>
