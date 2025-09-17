@@ -20,8 +20,10 @@ export const translations = {
     addExpenseManually: 'Add Expense Manually',
     description: 'Description',
     amount: 'Amount',
+    notes: 'Notes',
     descriptionPlaceholder: 'e.g., Coffee',
     amountPlaceholder: 'e.g., 25000',
+    notesPlaceholder: 'e.g., Meeting with a client',
     submitExpense: 'Add Expense',
     uploadFile: 'Upload File',
     uploadInstructions:
@@ -57,8 +59,10 @@ export const translations = {
     addExpenseManually: 'Tambah Pengeluaran Manual',
     description: 'Deskripsi',
     amount: 'Jumlah',
+    notes: 'Catatan',
     descriptionPlaceholder: 'cth., Kopi',
     amountPlaceholder: 'cth., 25000',
+    notesPlaceholder: 'cth., Rapat dengan klien',
     submitExpense: 'Tambah Pengeluaran',
     uploadFile: 'Unggah File',
     uploadInstructions:

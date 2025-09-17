@@ -44,7 +44,12 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Tag className="h-4 w-4 text-muted-foreground" />
-                        <span className="font-medium">{expense.description}</span>
+                        <div className="flex flex-col">
+                          <span className="font-medium">{expense.description}</span>
+                          {expense.notes && (
+                            <span className="text-xs text-muted-foreground">{expense.notes}</span>
+                          )}
+                        </div>
                       </div>
                     </TableCell>
                     <TableCell className="text-right">{formatCurrency(expense.amount)}</TableCell>

@@ -7,6 +7,7 @@ import { useLanguage } from '@/contexts/language-provider';
 import type { Expense } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
@@ -23,6 +24,7 @@ export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
   const formSchema = z.object({
     description: z.string().min(1, { message: t('fieldRequired') }),
     amount: z.coerce.number().positive({ message: 'Amount must be positive' }),
+    notes: z.string().optional(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -30,6 +32,7 @@ export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
     defaultValues: {
       description: '',
       amount: undefined,
+      notes: '',
     },
   });
 
@@ -71,6 +74,19 @@ export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
                   <FormLabel>{t('amount')}</FormLabel>
                   <FormControl>
                     <Input type="number" placeholder={t('amountPlaceholder')} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('notes')}</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder={t('notesPlaceholder')} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
