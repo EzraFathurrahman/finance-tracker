@@ -8,6 +8,7 @@ import { ExpenseList } from './expense-list';
 import { FileUploadCard } from './file-upload-card';
 import { ExpenseForm } from './expense-form';
 import { Separator } from './ui/separator';
+import { ConnectBankCard } from './connect-bank-card';
 
 const initialExpenses: Expense[] = [
   { id: '1', description: 'Groceries', amount: 75000 },
@@ -45,6 +46,8 @@ export function DashboardClient() {
           <ExpenseForm onAddExpense={handleAddExpense} expenses={expenses} />
           <Separator />
           <FileUploadCard onUpload={handleUpload} />
+          <Separator />
+          <ConnectBankCard />
         </div>
       </div>
     </div>

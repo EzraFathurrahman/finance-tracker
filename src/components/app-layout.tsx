@@ -1,5 +1,5 @@
 'use client';
-import { CircleDollarSign, Landmark, LayoutDashboard, Wallet, PiggyBank } from 'lucide-react';
+import { LayoutDashboard, PiggyBank } from 'lucide-react';
 import { useLanguage } from '@/contexts/language-provider';
 import {
   SidebarProvider,
@@ -11,24 +11,13 @@ import {
   SidebarMenuButton,
   SidebarInset,
   SidebarTrigger,
-  SidebarGroup,
-  SidebarGroupLabel,
   SidebarFooter,
 } from '@/components/ui/sidebar';
 import { LanguageToggle } from './language-toggle';
 import { ThemeToggle } from './theme-toggle';
-import { useToast } from '@/hooks/use-toast';
-import { Button } from './ui/button';
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { t } = useLanguage();
-  const { toast } = useToast();
-
-  const handleComingSoon = () => {
-    toast({
-      title: t('comingSoon'),
-    });
-  };
 
   return (
     <SidebarProvider>
@@ -48,29 +37,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
-          <SidebarGroup>
-            <SidebarGroupLabel>{t('connectBank')}</SidebarGroupLabel>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton onClick={handleComingSoon} tooltip={t('bca')}>
-                  <Landmark />
-                  <span>{t('bca')}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton onClick={handleComingSoon} tooltip={t('jago')}>
-                  <CircleDollarSign />
-                  <span>{t('jago')}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton onClick={handleComingSoon} tooltip={t('gopay')}>
-                  <Wallet />
-                  <span>{t('gopay')}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroup>
         </SidebarContent>
         <SidebarFooter>
           {/* You can add user profile info here later */}
