@@ -69,7 +69,7 @@ export function ExpenseForm({ onAddExpense, expenses, onUpload }: ExpenseFormPro
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t('addExpense')}</CardTitle>
+        <CardTitle>{t('addExpense')} ✍️</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>

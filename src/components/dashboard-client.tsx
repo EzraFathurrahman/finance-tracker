@@ -10,12 +10,12 @@ import { ExpensePieChart } from './expense-pie-chart';
 import { isWithinInterval, startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
 
 const initialExpenses: Expense[] = [
-  { id: '1', description: 'Groceries', amount: 75000, date: new Date() },
-  { id: '2', description: 'Lunch with colleagues', amount: 125000, date: new Date(new Date().setDate(new Date().getDate() - 2)) },
-  { id: '3', description: 'Internet Bill', amount: 300000, date: new Date(new Date().setDate(new Date().getDate() - 8)) },
-  { id: '4', description: 'Groceries', amount: 150000, date: new Date() },
-  { id: '5', description: 'Transport', amount: 50000, date: new Date(new Date().setDate(new Date().getDate() - 1)) },
-  { id: '6', description: 'Entertainment', amount: 200000, date: new Date(new Date().setDate(new Date().getDate() - 15)) },
+  { id: '1', description: 'Makan Siang', amount: 50000, date: new Date() },
+  { id: '2', description: 'Transportasi', amount: 25000, date: new Date() },
+  { id: '3', description: 'Belanja Bulanan', amount: 750000, date: new Date(new Date().setDate(new Date().getDate() - 8)) },
+  { id: '4', description: 'Kopi', amount: 22000, date: new Date() },
+  { id: '5', description: 'Transportasi', amount: 30000, date: new Date(new Date().setDate(new Date().getDate() - 1)) },
+  { id: '6', description: 'Nonton Bioskop', amount: 100000, date: new Date(new Date().setDate(new Date().getDate() - 15)) },
 ];
 
 export function DashboardClient() {
@@ -50,7 +50,7 @@ export function DashboardClient() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold tracking-tight font-headline">{t('welcome')}</h2>
+        <h2 className="text-2xl font-bold tracking-tight font-headline">{t('welcome')} 👋</h2>
         <p className="text-muted-foreground">{t('welcomeSubtitle')}</p>
       </div>
 

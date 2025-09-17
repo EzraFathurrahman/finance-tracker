@@ -56,7 +56,7 @@ export function ExpensePieChart({ expenses }: ExpensePieChartProps) {
   const chartConfig = React.useMemo(() => {
     return chartData.reduce((acc, data, index) => {
       acc[data.name] = {
-        label: `${data.name} (${data.percentage.toFixed(1)}%)`,
+        label: `${data.name}`,
         color: COLORS[index % COLORS.length],
       };
       return acc;
@@ -74,7 +74,7 @@ export function ExpensePieChart({ expenses }: ExpensePieChartProps) {
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <CardTitle>{t('expenseByCategory')}</CardTitle>
+        <CardTitle>{t('expenseByCategory')} 📊</CardTitle>
         <CardDescription>{t('topCategoriesSubtitle')}</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
@@ -97,7 +97,7 @@ export function ExpensePieChart({ expenses }: ExpensePieChartProps) {
               ))}
             </Pie>
             <ChartLegend
-              content={<ChartLegendContent nameKey="name" />}
+              content={<ChartLegendContent formatter={(value, entry) => `${value} (${entry.payload?.percentage.toFixed(1)}%)`} nameKey="name" />}
               className="[&_.recharts-legend-item]:w-1/2 [&_.recharts-legend-item]:justify-start"
             />
           </PieChart>
