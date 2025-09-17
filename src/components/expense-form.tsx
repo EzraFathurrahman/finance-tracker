@@ -11,15 +11,33 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { CirclePlus } from 'lucide-react';
+import { Check, ChevronsUpDown, CirclePlus } from 'lucide-react';
+import * as React from 'react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import { cn } from '@/lib/utils';
 
 interface ExpenseFormProps {
   onAddExpense: (expense: Omit<Expense, 'id'>) => void;
+  expenses: Expense[];
 }
 
-export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
+export function ExpenseForm({ onAddExpense, expenses }: ExpenseFormProps) {
   const { t } = useLanguage();
   const { toast } = useToast();
+  const [open, setOpen] = React.useState(false);
+
+  const existingDescriptions = React.useMemo(() => {
+    const descriptions = expenses.map(e => e.description);
+    return [...new Set(descriptions)].map(d => ({ label: d, value: d }));
+  }, [expenses]);
 
   const formSchema = z.object({
     description: z.string().min(1, { message: t('fieldRequired') }),
@@ -57,11 +75,70 @@ export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
               control={form.control}
               name="description"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-col">
                   <FormLabel>{t('description')}</FormLabel>
-                  <FormControl>
-                    <Input placeholder={t('descriptionPlaceholder')} {...field} />
-                  </FormControl>
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            'w-full justify-between',
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          {field.value
+                            ? existingDescriptions.find(
+                                framework => framework.value === field.value
+                              )?.label
+                            : t('descriptionPlaceholder')}
+                          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
+                      <Command
+                        filter={(value, search) => {
+                          if (value.toLowerCase().includes(search.toLowerCase())) return 1;
+                          return 0;
+                        }}
+                      >
+                        <CommandInput placeholder={t('descriptionPlaceholder')} />
+                        <CommandList>
+                          <CommandEmpty>{t('noResults')}</CommandEmpty>
+                          <CommandGroup>
+                            {existingDescriptions.map(framework => (
+                              <CommandItem
+                                value={framework.value}
+                                key={framework.value}
+                                onSelect={() => {
+                                  form.setValue('description', framework.value);
+                                  setOpen(false);
+                                }}
+                              >
+                                <Check
+                                  className={cn(
+                                    'mr-2 h-4 w-4',
+                                    framework.value === field.value ? 'opacity-100' : 'opacity-0'
+                                  )}
+                                />
+                                {framework.label}
+                              </CommandItem>
+                            ))}
+                             <CommandItem
+                                onSelect={(currentValue) => {
+                                  form.setValue("description", currentValue);
+                                  setOpen(false)
+                                }}
+                              >
+                                {t('addCategory')}
+                              </CommandItem>
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}

@@ -21,7 +21,7 @@ export const translations = {
     description: 'Description',
     amount: 'Amount',
     notes: 'Notes',
-    descriptionPlaceholder: 'e.g., Coffee',
+    descriptionPlaceholder: 'e.g., Coffee or select/create new',
     amountPlaceholder: 'e.g., 25000',
     notesPlaceholder: 'e.g., Meeting with a client',
     submitExpense: 'Add Expense',
@@ -37,6 +37,8 @@ export const translations = {
     expenseAmount: 'Amount',
     expenseAdded: 'Expense added successfully!',
     fieldRequired: 'This field is required',
+    noResults: 'No results found.',
+    addCategory: 'Add new category...',
   },
   id: {
     appName: 'KeuanganKu',
@@ -60,7 +62,7 @@ export const translations = {
     description: 'Deskripsi',
     amount: 'Jumlah',
     notes: 'Catatan',
-    descriptionPlaceholder: 'cth., Kopi',
+    descriptionPlaceholder: 'cth., Kopi atau pilih/buat baru',
     amountPlaceholder: 'cth., 25000',
     notesPlaceholder: 'cth., Rapat dengan klien',
     submitExpense: 'Tambah Pengeluaran',
@@ -76,6 +78,8 @@ export const translations = {
     expenseAmount: 'Jumlah',
     expenseAdded: 'Pengeluaran berhasil ditambahkan!',
     fieldRequired: 'Bagian ini wajib diisi',
+    noResults: 'Kategori tidak ditemukan.',
+    addCategory: 'Tambah kategori baru...',
   },
 };
 

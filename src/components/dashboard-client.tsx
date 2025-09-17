@@ -42,7 +42,7 @@ export function DashboardClient() {
           <ExpenseList expenses={expenses} />
         </div>
         <div className="space-y-6 lg:col-span-2">
-          <ExpenseForm onAddExpense={handleAddExpense} />
+          <ExpenseForm onAddExpense={handleAddExpense} expenses={expenses} />
           <Separator />
           <FileUploadCard onUpload={handleUpload} />
         </div>
