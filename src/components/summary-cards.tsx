@@ -43,7 +43,7 @@ export function SummaryCards({ expenses, timeRange, setTimeRange }: SummaryCards
         <CardTitle className="text-sm font-medium">{t('totalExpenses')}</CardTitle>
          <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm" className="flex items-center gap-1 -mr-2 text-sm text-foreground">
+            <Button variant="ghost" size="sm" className="flex items-center gap-1 -mr-2 text-sm text-accent-foreground bg-accent hover:bg-accent/90">
               {timeRangeTranslations[timeRange]}
               <ChevronDown className="h-4 w-4" />
             </Button>
