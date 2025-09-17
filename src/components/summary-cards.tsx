@@ -59,13 +59,6 @@ export function SummaryCards({ expenses, timeRange, setTimeRange }: SummaryCards
         <div className="text-3xl font-bold">{formatCurrency(totalExpenses)}</div>
         <p className="text-xs text-muted-foreground">{t('expenseCount', expenses.length)}</p>
       </CardContent>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4">
-        <CardTitle className="text-sm font-medium">{t('timeRange')}</CardTitle>
-        <CircleDollarSign className="h-4 w-4 text-muted-foreground" />
-      </CardHeader>
-      <CardContent>
-        <div className="text-lg font-semibold">{timeRangeTranslations[timeRange]}</div>
-      </CardContent>
     </Card>
   );
 }
