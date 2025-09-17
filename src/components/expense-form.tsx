@@ -27,9 +27,9 @@ import { Separator } from '@/components/ui/separator';
 import { FileUploadCard } from './file-upload-card';
 
 interface ExpenseFormProps {
-  onAddExpense: (expense: Omit<Expense, 'id'>) => void;
+  onAddExpense: (expense: Omit<Expense, 'id' | 'date'>) => void;
   expenses: Expense[];
-  onUpload: (expenses: Omit<Expense, 'id'>[]) => void;
+  onUpload: (expenses: Omit<Expense, 'id' | 'date'>[]) => void;
 }
 
 export function ExpenseForm({ onAddExpense, expenses, onUpload }: ExpenseFormProps) {

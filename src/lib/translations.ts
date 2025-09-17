@@ -45,6 +45,8 @@ export const translations = {
     expenseDetails: 'Expense Details',
     timeRange: 'Time Range',
     thisMonth: 'This Month',
+    thisWeek: 'This Week',
+    thisDay: 'Today',
   },
   id: {
     appName: 'KeuanganKu',
@@ -92,6 +94,8 @@ export const translations = {
     expenseDetails: 'Rincian Pengeluaran',
     timeRange: 'Rentang Waktu',
     thisMonth: 'Bulan Ini',
+    thisWeek: 'Minggu Ini',
+    thisDay: 'Hari Ini',
   },
 };
 

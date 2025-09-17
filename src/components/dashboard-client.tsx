@@ -1,34 +1,51 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useLanguage } from '@/contexts/language-provider';
-import type { Expense } from '@/types';
+import type { Expense, TimeRange } from '@/types';
 import { SummaryCards } from './summary-cards';
 import { ExpenseList } from './expense-list';
 import { ExpenseForm } from './expense-form';
 import { ExpensePieChart } from './expense-pie-chart';
+import { isWithinInterval, startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
 
 const initialExpenses: Expense[] = [
-  { id: '1', description: 'Groceries', amount: 75000 },
-  { id: '2', description: 'Lunch with colleagues', amount: 125000 },
-  { id: '3', description: 'Internet Bill', amount: 300000 },
-  { id: '4', description: 'Groceries', amount: 150000 },
-  { id: '5', description: 'Transport', amount: 50000 },
-  { id: '6', description: 'Entertainment', amount: 200000 },
+  { id: '1', description: 'Groceries', amount: 75000, date: new Date() },
+  { id: '2', description: 'Lunch with colleagues', amount: 125000, date: new Date(new Date().setDate(new Date().getDate() - 2)) },
+  { id: '3', description: 'Internet Bill', amount: 300000, date: new Date(new Date().setDate(new Date().getDate() - 8)) },
+  { id: '4', description: 'Groceries', amount: 150000, date: new Date() },
+  { id: '5', description: 'Transport', amount: 50000, date: new Date(new Date().setDate(new Date().getDate() - 1)) },
+  { id: '6', description: 'Entertainment', amount: 200000, date: new Date(new Date().setDate(new Date().getDate() - 15)) },
 ];
 
 export function DashboardClient() {
   const { t } = useLanguage();
   const [expenses, setExpenses] = useState<Expense[]>(initialExpenses);
+  const [timeRange, setTimeRange] = useState<TimeRange>('month');
 
-  const handleAddExpense = (newExpense: Omit<Expense, 'id'>) => {
-    setExpenses(prev => [{ ...newExpense, id: crypto.randomUUID() }, ...prev]);
+  const handleAddExpense = (newExpense: Omit<Expense, 'id' | 'date'>) => {
+    setExpenses(prev => [{ ...newExpense, id: crypto.randomUUID(), date: new Date() }, ...prev]);
   };
 
-  const handleUpload = (uploadedExpenses: Omit<Expense, 'id'>[]) => {
-    const newExpenses = uploadedExpenses.map(e => ({ ...e, id: crypto.randomUUID() }));
+  const handleUpload = (uploadedExpenses: Omit<Expense, 'id' | 'date'>[]) => {
+    const newExpenses = uploadedExpenses.map(e => ({ ...e, id: crypto.randomUUID(), date: new Date() }));
     setExpenses(prev => [...newExpenses, ...prev]);
   };
+
+  const filteredExpenses = useMemo(() => {
+    const now = new Date();
+    let interval;
+
+    if (timeRange === 'day') {
+      interval = { start: startOfDay(now), end: endOfDay(now) };
+    } else if (timeRange === 'week') {
+      interval = { start: startOfWeek(now), end: endOfWeek(now) };
+    } else { // month
+      interval = { start: startOfMonth(now), end: endOfMonth(now) };
+    }
+
+    return expenses.filter(expense => isWithinInterval(expense.date, interval));
+  }, [expenses, timeRange]);
 
   return (
     <div className="space-y-6">
@@ -39,10 +56,10 @@ export function DashboardClient() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         <div className="lg:col-span-2">
-          <SummaryCards expenses={expenses} />
+          <SummaryCards expenses={filteredExpenses} timeRange={timeRange} setTimeRange={setTimeRange} />
         </div>
         <div className="lg:col-span-3">
-          <ExpensePieChart expenses={expenses} />
+          <ExpensePieChart expenses={filteredExpenses} />
         </div>
       </div>
 
@@ -51,7 +68,7 @@ export function DashboardClient() {
           <ExpenseForm onAddExpense={handleAddExpense} expenses={expenses} onUpload={handleUpload} />
         </div>
         <div className="space-y-6">
-          <ExpenseList expenses={expenses} />
+          <ExpenseList expenses={filteredExpenses} />
         </div>
       </div>
     </div>
