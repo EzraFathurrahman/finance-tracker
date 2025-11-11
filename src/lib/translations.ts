@@ -64,6 +64,12 @@ export const translations = {
     finalPrice: 'Final Price',
     noPromotions: 'No promotional items yet',
     promotionBadge: 'PROMO',
+    searchPromos: 'Cari Promo',
+    searchPromosDesc: 'Cari promo dan diskon untuk kategori ini di berbagai platform',
+    category: 'Kategori',
+    searchOn: 'Cari di',
+    promoSearchTip: 'Klik salah satu untuk mencari promo terbaru dan dapatkan penawaran terbaik!',
+    clickToSearch: 'Klik untuk cari promo',
   },
   id: {
     appName: 'KeuanganKu',
@@ -130,6 +136,12 @@ export const translations = {
     finalPrice: 'Harga Final',
     noPromotions: 'Belum ada barang promo',
     promotionBadge: 'PROMO',
+    searchPromos: 'Cari Promo',
+    searchPromosDesc: 'Cari promo dan diskon untuk kategori ini di berbagai platform',
+    category: 'Kategori',
+    searchOn: 'Cari di',
+    promoSearchTip: 'Klik salah satu untuk mencari promo terbaru dan dapatkan penawaran terbaik!',
+    clickToSearch: 'Klik untuk cari promo',
   },
 };
 

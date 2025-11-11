@@ -1,12 +1,15 @@
 'use client';
 
-import { Tag } from 'lucide-react';
+import { Tag, Search } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import type { Expense } from '@/types';
 import { useLanguage } from '@/contexts/language-provider';
+import { PromoSearchDialog } from './promo-search-dialog';
+import * as React from 'react';
 
 interface ExpenseListProps {
   expenses: Expense[];
@@ -14,6 +17,13 @@ interface ExpenseListProps {
 
 export function ExpenseList({ expenses }: ExpenseListProps) {
   const { t, language } = useLanguage();
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [selectedCategory, setSelectedCategory] = React.useState('');
+
+  const handleSearchClick = (category: string) => {
+    setSelectedCategory(category);
+    setDialogOpen(true);
+  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat(language === 'id' ? 'id-ID' : 'en-US', {
@@ -36,6 +46,7 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
               <TableRow>
                 <TableHead>{t('expenseDescription')}</TableHead>
                 <TableHead className="text-right">{t('expenseAmount')}</TableHead>
+                <TableHead className="w-[50px]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -80,11 +91,22 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
                         )}
                       </div>
                     </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-8 w-8"
+                        onClick={() => handleSearchClick(expense.description)}
+                        title={t('searchPromos')}
+                      >
+                        <Search className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={2} className="text-center text-muted-foreground">
+                  <TableCell colSpan={3} className="text-center text-muted-foreground">
                     {t('noExpenses')}
                   </TableCell>
                 </TableRow>
@@ -93,6 +115,12 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
           </Table>
         </ScrollArea>
       </CardContent>
+
+      <PromoSearchDialog
+        category={selectedCategory}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
     </Card>
   );
 }
