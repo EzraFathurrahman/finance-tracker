@@ -7,6 +7,7 @@ import { SummaryCards } from './summary-cards';
 import { ExpenseList } from './expense-list';
 import { ExpenseForm } from './expense-form';
 import { ExpensePieChart } from './expense-pie-chart';
+import { PromotionHunterSection } from './promotion-hunter-section';
 import { isWithinInterval, startOfDay, endOfDay, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
 
 const initialExpenses: Expense[] = [
@@ -70,6 +71,10 @@ export function DashboardClient() {
         <div className="space-y-6">
           <ExpenseList expenses={filteredExpenses} />
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 gap-6">
+        <PromotionHunterSection expenses={filteredExpenses} />
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import { Tag } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Badge } from '@/components/ui/badge';
 import type { Expense } from '@/types';
 import { useLanguage } from '@/contexts/language-provider';
 
@@ -44,15 +45,41 @@ export function ExpenseList({ expenses }: ExpenseListProps) {
                     <TableCell>
                       <div className="flex items-center gap-2">
                         <Tag className="h-4 w-4 text-muted-foreground" />
-                        <div className="flex flex-col">
-                          <span className="font-medium">{expense.description}</span>
+                        <div className="flex flex-col flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium">{expense.description}</span>
+                            {expense.isPromotion && (
+                              <Badge
+                                variant="secondary"
+                                className="text-xs bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300"
+                              >
+                                {t('promotionBadge')}
+                              </Badge>
+                            )}
+                          </div>
                           {expense.notes && (
                             <span className="text-xs text-muted-foreground">{expense.notes}</span>
+                          )}
+                          {expense.isPromotion && expense.discountPercentage && (
+                            <span className="text-xs text-green-600 dark:text-green-400 font-medium">
+                              {expense.discountPercentage}% {t('discount')}
+                            </span>
                           )}
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right">{formatCurrency(expense.amount)}</TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex flex-col items-end">
+                        <span className={expense.isPromotion ? "font-bold text-green-600 dark:text-green-400" : ""}>
+                          {formatCurrency(expense.amount)}
+                        </span>
+                        {expense.isPromotion && expense.originalPrice && (
+                          <span className="text-xs text-muted-foreground line-through">
+                            {formatCurrency(expense.originalPrice)}
+                          </span>
+                        )}
+                      </div>
+                    </TableCell>
                   </TableRow>
                 ))
               ) : (

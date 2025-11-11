@@ -11,8 +11,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
-import { Check, ChevronsUpDown, CirclePlus } from 'lucide-react';
+import { Check, ChevronsUpDown, CirclePlus, Tag } from 'lucide-react';
 import * as React from 'react';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   Command,
@@ -46,6 +47,9 @@ export function ExpenseForm({ onAddExpense, expenses, onUpload }: ExpenseFormPro
     description: z.string().min(1, { message: t('fieldRequired') }),
     amount: z.coerce.number().positive({ message: 'Amount must be positive' }),
     notes: z.string().optional(),
+    isPromotion: z.boolean().optional(),
+    originalPrice: z.coerce.number().positive().optional(),
+    discountPercentage: z.coerce.number().min(0).max(100).optional(),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,8 +58,13 @@ export function ExpenseForm({ onAddExpense, expenses, onUpload }: ExpenseFormPro
       description: '',
       amount: undefined,
       notes: '',
+      isPromotion: false,
+      originalPrice: undefined,
+      discountPercentage: undefined,
     },
   });
+
+  const isPromotion = form.watch('isPromotion');
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     onAddExpense(values);
@@ -172,6 +181,59 @@ export function ExpenseForm({ onAddExpense, expenses, onUpload }: ExpenseFormPro
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="isPromotion"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel className="flex items-center gap-2">
+                      <Tag className="h-4 w-4" />
+                      {t('promotionItem')}
+                    </FormLabel>
+                    <p className="text-sm text-muted-foreground">
+                      {t('promotionItemDesc')}
+                    </p>
+                  </div>
+                </FormItem>
+              )}
+            />
+            {isPromotion && (
+              <div className="space-y-4 rounded-md border p-4 bg-muted/50">
+                <FormField
+                  control={form.control}
+                  name="originalPrice"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('originalPrice')}</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder={t('originalPricePlaceholder')} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="discountPercentage"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('discountPercentage')}</FormLabel>
+                      <FormControl>
+                        <Input type="number" placeholder={t('discountPercentagePlaceholder')} {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            )}
             <Button type="submit" className="w-full">
               <CirclePlus className="mr-2 h-4 w-4" />
               {t('submitExpense')}
