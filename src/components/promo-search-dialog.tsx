@@ -32,17 +32,17 @@ export function PromoSearchDialog({ category, open, onOpenChange }: PromoSearchD
       icon: '🔍',
     },
     {
-      name: 'Tokopedia',
+      name: 'Gila Diskon',
       url: `https://www.tokopedia.com/search?q=${encodeURIComponent(category)}`,
       icon: '🛒',
     },
     {
-      name: 'Shopee',
+      name: 'Gofood',
       url: `https://shopee.co.id/search?keyword=${encodeURIComponent(category)}`,
       icon: '🛍️',
     },
     {
-      name: 'Lazada',
+      name: 'Katalogpromosi',
       url: `https://www.lazada.co.id/catalog/?q=${encodeURIComponent(category)}`,
       icon: '🏪',
     },

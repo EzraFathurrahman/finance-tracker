@@ -28,11 +28,6 @@ export function DashboardClient() {
     setExpenses(prev => [{ ...newExpense, id: crypto.randomUUID(), date: new Date() }, ...prev]);
   };
 
-  const handleUpload = (uploadedExpenses: Omit<Expense, 'id' | 'date'>[]) => {
-    const newExpenses = uploadedExpenses.map(e => ({ ...e, id: crypto.randomUUID(), date: new Date() }));
-    setExpenses(prev => [...newExpenses, ...prev]);
-  };
-
   const filteredExpenses = useMemo(() => {
     const now = new Date();
     let interval;
@@ -66,7 +61,7 @@ export function DashboardClient() {
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         <div className="space-y-6">
-          <ExpenseForm onAddExpense={handleAddExpense} expenses={expenses} onUpload={handleUpload} />
+          <ExpenseForm onAddExpense={handleAddExpense} expenses={expenses} />
         </div>
         <div className="space-y-6">
           <ExpenseList expenses={filteredExpenses} />
