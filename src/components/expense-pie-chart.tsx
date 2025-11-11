@@ -1,5 +1,5 @@
 'use client';
-import { TrendingUp } from 'lucide-react';
+import { TrendingUp, Search } from 'lucide-react';
 import { Pie, PieChart, Cell } from 'recharts';
 import * as React from 'react';
 
@@ -20,6 +20,8 @@ import {
 } from '@/components/ui/chart';
 import { useLanguage } from '@/contexts/language-provider';
 import type { Expense } from '@/types';
+import { PromoSearchDialog } from './promo-search-dialog';
+import { Button } from '@/components/ui/button';
 
 interface ExpensePieChartProps {
   expenses: Expense[];
@@ -35,8 +37,15 @@ const COLORS = [
 
 export function ExpensePieChart({ expenses }: ExpensePieChartProps) {
   const { t, language } = useLanguage();
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [selectedCategory, setSelectedCategory] = React.useState('');
 
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+    setDialogOpen(true);
+  };
 
   const chartData = React.useMemo(() => {
     const categoryTotals = expenses.reduce((acc, expense) => {
@@ -91,9 +100,20 @@ export function ExpensePieChart({ expenses }: ExpensePieChartProps) {
                 />
               }
             />
-             <Pie data={chartData} dataKey="value" nameKey="name" innerRadius={60}>
+             <Pie
+              data={chartData}
+              dataKey="value"
+              nameKey="name"
+              innerRadius={60}
+              onClick={(data) => handleCategoryClick(data.name)}
+              cursor="pointer"
+            >
               {chartData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                  style={{ cursor: 'pointer' }}
+                />
               ))}
             </Pie>
             <ChartLegend
@@ -104,8 +124,17 @@ export function ExpensePieChart({ expenses }: ExpensePieChartProps) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm pt-4">
-        <div className="leading-none text-muted-foreground">{t('topCategoriesSubtitle')}</div>
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <Search className="h-3 w-3" />
+          <span>{t('clickToSearch')}</span>
+        </div>
       </CardFooter>
+
+      <PromoSearchDialog
+        category={selectedCategory}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
     </Card>
   );
 }
